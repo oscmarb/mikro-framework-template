@@ -1,4 +1,11 @@
 {
+  "name": "oscmarb/mikro-framework-template",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Óscar Martínez Benítez"
+    }
+  ],
   "require": {
     "oscmarb/mikro-framework": "^1.0"
   },
