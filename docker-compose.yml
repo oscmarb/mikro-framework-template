@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+    mikro_app:
+        build: .
+        container_name: mikro_app
+        volumes:
+            - .:/app
+        ports:
+            - 8080:8080
