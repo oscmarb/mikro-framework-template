@@ -1,10 +1,9 @@
-FROM php:8.0.7-alpine3.13
+FROM php:8.0-alpine3.13
 
 RUN mkdir /app
 WORKDIR /app
 
-RUN apk add --no-cache bash \
-        libzip-dev
+RUN apk add --no-cache bash libzip-dev
 
 RUN docker-php-ext-install zip
 

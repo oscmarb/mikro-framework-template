@@ -1,20 +1,32 @@
-deps:
-	@docker exec mikro_app sh -c 'composer install'
+UID=$(shell id -u)
+GID=$(shell id -g)
+DOCKER_PHP_SERVICE=php
 
-up:
-	@docker-compose up -d
+SHELL=/bin/bash
+
+.DEFAULT_GOAL := start
+
+start: erase build composer-install
+
+erase:
+		docker-compose down -v
 
 build:
-	@docker-compose build
+		docker-compose pull && docker-compose build
 
-stop:
-	@docker-compose stop
+up:
+		docker-compose up -d
 
-down:
-	@docker-compose down
+composer-install:
+		docker-compose up -d
+		docker exec mikro_app sh -c 'composer install'
 
-init:
-	@make build
-	@make up
-	@make deps
+composer-update:
+		docker-compose up -d
+		docker exec mikro_app sh -c 'composer update'
 
+bash:
+		docker-compose run --rm -u ${UID}:${GID} ${DOCKER_PHP_SERVICE} sh
+
+phpstan:
+		docker run --rm -v ${PWD}:/app ghcr.io/phpstan/phpstan analyse ./src -l 8
